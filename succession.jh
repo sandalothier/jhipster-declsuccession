@@ -1,0 +1,74 @@
+/**
+ * entity Deces {
+ * AutorisationTransfertFonds entity.
+ * @author Sanda.
+ *   Cette table represente le microservice qui 
+ *   permet de mettre l'entete sur chaque 
+ *   déclaration
+ *   RELATION  
+ *   OneToMany avec Contribuable// heritier
+ */
+entity Deces {
+   dateDeces Date
+   nomDefunt String
+   prenomsDefunt String
+   dateNaissance Date
+}
+/**
+ * BiensDefunt entity.
+ * @author Sanda.
+ *   Cette table represente le microservice qui 
+ *   permet de mettre l'entete sur chaque 
+ *   déclaration
+ *   RELATION  
+ *   OneToMany avec Contribuable// heritier
+ */
+entity BiensDefunt {
+   bien String
+   valeur Double
+   montantAutorise Double
+}
+enum Disposition {
+    DISPOSITION_DE_CUJUS, DISPOSITION_MARIAGE, DISPOSITION_TESTAMENTAIRE
+}
+/**
+ * Succession entity.
+ * @author Sanda.
+ *     Cette table liste les déclarations 
+ *     existente ainsi que la recurrence des 
+ *     déclarations à laquelle elles sont soumises
+ *     RELATION
+ *         ManyToMany avec Marche
+ */
+entity Succession {
+    dispositionSuccession Disposition
+    dateDeces Date
+    dateDebut Date
+}
+/**
+ * Heritier entity.
+ * @author Sanda.
+ *    relation
+ *  ManyToOne avec Contribuable
+ */
+entity Heritier {
+    dateDecision Date
+}
+relationship OneToMany {
+    Deces to BiensDefunt
+}
+relationship OneToMany {
+    Deces to Heritier
+}
+relationship OneToMany {
+    Heritier to Contribuable
+}
+relationship OneToMany {
+    Deces to Succession
+}
+relationship OneToMany {
+    BiensDefunt to Heritier
+}
+relationship OneToMany {
+    BiensDefunt to Succession
+}
